@@ -38,7 +38,13 @@ async function run() {
          });
 
 
-  
+    // GET SINGLE COURSES
+   app.get('/courses/:id', async (req,res)=>{
+    const id = req.params.id;
+    const query = {_id: ObjectId(id)};
+    const booking = await coursesCollection.findOne(query)
+  res.json(booking);
+  });
     
 
 
