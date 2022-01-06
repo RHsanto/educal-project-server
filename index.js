@@ -20,6 +20,7 @@ async function run() {
     const database = client.db("educalCourses");
     const coursesCollection = database.collection("all-courses");
     const eventsCollection = database.collection("all-events");
+    const blogsCollection = database.collection("all-blogs");
     
 
   // GET API ALL courses
@@ -34,6 +35,14 @@ async function run() {
           const cursor = eventsCollection.find({})
           const events = await cursor.toArray();
           res.send(events);
+    
+         });
+
+  // GET API ALL events
+        app.get('/all-blogs', async (req,res)=>{
+          const cursor = blogsCollection.find({})
+          const blogs = await cursor.toArray();
+          res.send(blogs);
     
          });
 
