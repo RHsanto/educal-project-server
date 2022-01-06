@@ -3,7 +3,7 @@ require('dotenv').config();
 const ObjectId = require('mongodb').ObjectId;
 const express = require('express');
 const cors = require('cors')
-const app =express();
+const app = express();
 const port = process.env.PORT || 8000;
 
 //midalware
@@ -21,53 +21,59 @@ async function run() {
     const coursesCollection = database.collection("all-courses");
     const eventsCollection = database.collection("all-events");
     const blogsCollection = database.collection("all-blogs");
-    
 
-  // GET API ALL courses
-        app.get('/all-courses', async (req,res)=>{
-          const cursor = coursesCollection.find({})
-          const courses = await cursor.toArray();
-          res.send(courses);
-    
-         });
-  // GET API ALL events
-        app.get('/all-events', async (req,res)=>{
-          const cursor = eventsCollection.find({})
-          const events = await cursor.toArray();
-          res.send(events);
-    
-         });
 
-  // GET API ALL events
-        app.get('/all-blogs', async (req,res)=>{
-          const cursor = blogsCollection.find({})
-          const blogs = await cursor.toArray();
-          res.send(blogs);
-    
-         });
+    // GET API ALL courses
+    app.get('/all-courses', async (req, res) => {
+      const cursor = coursesCollection.find({})
+      const courses = await cursor.toArray();
+      res.send(courses);
+
+    });
+    // GET API ALL events
+    app.get('/all-events', async (req, res) => {
+      const cursor = eventsCollection.find({})
+      const events = await cursor.toArray();
+      res.send(events);
+
+    });
+
+    // GET API ALL events
+    app.get('/all-blogs', async (req, res) => {
+      const cursor = blogsCollection.find({})
+      const blogs = await cursor.toArray();
+      res.send(blogs);
+    });
 
 
     // GET SINGLE COURSES
-   app.get('/courses/:id', async (req,res)=>{
-    const id = req.params.id;
-    const query = {_id: ObjectId(id)};
-    const booking = await coursesCollection.findOne(query)
-  res.json(booking);
-  });
-    
+    app.get('/courses/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const booking = await coursesCollection.findOne(query)
+      res.json(booking);
+    });
+
+    // GETTING SINGLE EVENT DATA HERE 
+    app.get('/course/:id', async (req, res) => {
+      const query = { _id: ObjectId(req.params.id) };
+      const result = await eventsCollection.findOne(query)
+      res.json(result)
+    })
 
 
-   
+
+
   } finally {
-   // await client.close();
+    // await client.close();
   }
 }
 run().catch(console.dir);
 
 
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
   res.send('Running the server on educal projects');
 })
 app.listen(port, () => {
-  console.log('Example app listening at',port)
+  console.log('Example app listening at', port)
 })
