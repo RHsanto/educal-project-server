@@ -55,7 +55,7 @@ async function run() {
     });
 
     // GETTING SINGLE EVENT DATA HERE 
-    app.get('/course/:id', async (req, res) => {
+    app.get('/events/:id', async (req, res) => {
       const query = { _id: ObjectId(req.params.id) };
       const result = await eventsCollection.findOne(query)
       res.json(result)
